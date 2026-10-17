@@ -190,6 +190,15 @@
   .recap p { margin: 6px 0; font-size: 15.5px; line-height: 1.5; }
   .recap .q { color: var(--muted); font-size: 13.5px; }
 
+  .forward-cta {
+    font-family: var(--heading-font);
+    color: var(--accent);
+    font-size: 16.5px;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0 0 20px;
+  }
+
   .result-actions {
     display: flex;
     flex-direction: column;
@@ -342,8 +351,9 @@
   var RESULT_ANY_NO = "I understand, and I respect your answer. Thank you for reading the letter and for being honest with me. I will always be grateful for you.";
   var RESULT_ANY_IDK = "That is completely okay. You do not have to know right now, and there is no rush at all. Thank you for reading — that already means a lot.";
 
-  var SHARE_LABEL = "Share answers on Telegram";
+  var SHARE_LABEL = "Send your answers to him";
   var COPY_LABEL = "Copy answers";
+  var FORWARD_PROMPT = "One last thing — please forward these answers to him on Telegram. Hearing from you, whatever the answer, would mean the world to him.";
   var SHARE_TEXT_TEMPLATE = "I read your letter, and here are my honest answers:\n1. {answer1}\n2. {answer2}\n\n{url}";
 
   var REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -505,6 +515,11 @@
       recap.appendChild(p);
     }
     card.appendChild(recap);
+
+    var forward = document.createElement("p");
+    forward.className = "forward-cta";
+    forward.textContent = FORWARD_PROMPT;
+    card.appendChild(forward);
 
     var actions = document.createElement("div");
     actions.className = "result-actions";
