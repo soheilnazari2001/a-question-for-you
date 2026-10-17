@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>A letter for Elahe</title>
+<style>
+  :root {
+    --bg: radial-gradient(1100px 520px at 50% -8%, #FFF4EE 0%, rgba(255, 244, 238, 0) 65%),
+          linear-gradient(180deg, #FFF9F5 0%, #FBEDE6 55%, #F7DFD8 100%);
+    --card: #FFFCFA;
+    --text: #3F2C2D;
+    --accent: #B25C67;
+    --muted: #8A6B6A;
+    --accent-ghost: rgba(178, 92, 103, 0.35);
+    --accent-soft: rgba(178, 92, 103, 0.10);
+    --yes-text: #FFFFFF;
+    --card-shadow: 0 18px 50px rgba(63, 44, 45, 0.12);
+    --heading-font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", "Times New Roman", serif;
+    --body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    --radius: 28px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: radial-gradient(1100px 520px at 50% -8%, #35252B 0%, rgba(53, 37, 43, 0) 65%),
+            linear-gradient(180deg, #191214 0%, #22181C 55%, #2B1E23 100%);
+      --card: #2B1F24;
+      --text: #F5E9E5;
+      --accent: #E8A3AB;
+      --muted: #C9AFA9;
+      --accent-ghost: rgba(232, 163, 171, 0.40);
+      --accent-soft: rgba(232, 163, 171, 0.12);
+      --yes-text: #2A1B1F;
+      --card-shadow: 0 18px 50px rgba(0, 0, 0, 0.50);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--body-font);
+    min-height: 100vh;
+    padding: 24px 16px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 36px 28px 40px;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px 32px; border-radius: 22px; }
+  }
+
+  header { text-align: center; margin-bottom: 28px; }
+
+  .heart-mark {
+    color: var(--accent);
+    font-size: 26px;
+    animation: heartbeat 2.4s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: var(--heading-font);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 10px 0 0;
+  }
+
+  @media (max-width: 480px) { h1 { font-size: 27px; } }
+
+  .letter p {
+    font-size: 17px;
+    line-height: 1.75;
+    margin: 0 0 18px;
+  }
+
+  .letter .greeting { font-family: var(--heading-font); font-size: 20px; }
+  .letter .closing { margin-top: 26px; }
+  .letter .signature {
+    font-family: var(--heading-font);
+    font-style: italic;
+    font-size: 17px;
+    white-space: pre-line;
+    margin-top: 8px;
+  }
+
+  .divider {
+    border: none;
+    text-align: center;
+    margin: 34px 0 30px;
+    color: var(--accent);
+    font-size: 15px;
+    letter-spacing: 14px;
+  }
+  .divider::before { content: "· · ·"; }
+  .divider::after { content: "♥"; display: block; font-size: 18px; letter-spacing: 0; margin-top: 6px; }
+
+  .question { margin-top: 8px; }
+  .question.hidden, .hidden { display: none; }
+
+  .question h2 {
+    font-family: var(--heading-font);
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 1.35;
+    margin: 0 0 6px;
+  }
+
+  .hint { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  @media (min-width: 480px) {
+    .buttons { flex-direction: row; }
+    .buttons .btn { flex: 1; }
+  }
+
+  .btn {
+    min-height: 52px;
+    font-family: var(--body-font);
+    font-size: 17px;
+    padding: 0 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn:active { transform: scale(0.97); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  .btn-yes {
+    background: var(--accent);
+    color: var(--yes-text);
+    font-weight: 600;
+    min-height: 56px;
+    box-shadow: 0 8px 22px rgba(178, 92, 103, 0.28);
+    animation: yes-pulse 3s ease-in-out infinite;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid var(--accent-ghost);
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible { background: var(--accent-soft); }
+
+  .btn-dodge { z-index: 10; }
+
+  .dodge-line {
+    min-height: 24px;
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 14px 0 0;
+    text-align: center;
+    animation: line-pop 0.35s ease;
+  }
+
+  .result-title { font-family: var(--heading-font); font-size: 24px; margin: 0 0 10px; }
+  .result-text { font-size: 16.5px; line-height: 1.7; margin: 0 0 22px; }
+
+  .recap {
+    background: var(--accent-soft);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin: 0 0 24px;
+  }
+  .recap p { margin: 6px 0; font-size: 15.5px; line-height: 1.5; }
+  .recap .q { color: var(--muted); font-size: 13.5px; }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .result-actions a.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    min-height: 54px;
+  }
+  .tg-link { color: var(--accent); text-align: center; font-size: 14.5px; margin-top: 10px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .question:not(.hidden) { animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.12); }
+    40% { transform: scale(1); }
+    55% { transform: scale(1.08); }
+    70% { transform: scale(1); }
+  }
+
+  @keyframes yes-pulse {
+    0%, 100% { box-shadow: 0 8px 22px rgba(178, 92, 103, 0.28); }
+    50% { box-shadow: 0 8px 30px rgba(178, 92, 103, 0.45); }
+  }
+
+  @keyframes line-pop {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 100;
+  }
+  .floating-heart {
+    position: absolute;
+    bottom: -40px;
+    color: var(--accent);
+    animation: float-up 3s ease-out forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes float-up {
+    0%   { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+    12%  { opacity: 0.85; }
+    50%  { transform: translateY(-38vh) translateX(-18px) scale(1); }
+    100% { transform: translateY(-78vh) translateX(14px) scale(1.05); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <header class="reveal">
+    <span class="heart-mark">♥</span>
+    <h1>Elahe, I am sorry.</h1>
+  </header>
+
+  <section class="letter" aria-label="Letter">
+    <p class="greeting reveal" style="animation-delay:.12s">Dear Elahe,</p>
+    <p class="reveal" style="animation-delay:.2s">Thank you for being there for me, no matter what. Even when things were hard, even when I gave you no reason to stay, you stayed. I don't think I ever told you how much that meant to me. I am telling you now, from the bottom of my heart.</p>
+    <p class="reveal" style="animation-delay:.28s">I am sorry for the many times I made you cry. I am sorry for my words when they were sharp, and for my actions when they were careless. You deserved kindness from me, and too many times I gave you pain instead. I see that clearly now.</p>
+    <p class="reveal" style="animation-delay:.36s">I am sorry for making your life feel like hell. Your days should have felt light and safe with me, and I made them heavy. That is not something I can simply take back, but I can tell you honestly that I am sorry.</p>
+    <p class="reveal" style="animation-delay:.44s">I am also sorry for the harm I caused beyond us. I am sorry for the damage to the two relationships that mattered to you, and for breaking the one we had together. I am sorry for every part I played, and I will not make excuses for any of it.</p>
+    <p class="reveal" style="animation-delay:.52s">I never wanted any of this to happen. I did not know what I was doing, and I am not saying that to excuse myself. I am saying it because it is the truth, and you deserve the truth. You are the most valuable person in the world, and I treated you as if you were not. That was my mistake, never yours.</p>
+    <p class="reveal" style="animation-delay:.6s">You do not owe me anything. Not forgiveness, not friendship, not an answer that makes me feel better. Whatever you feel is allowed, and whatever you decide is okay. I just wanted you to know how I see it now, and how truly sorry I am.</p>
+    <p class="closing reveal" style="animation-delay:.68s">At the end of this letter are two questions. Please answer them honestly. There is no wrong answer, and nothing you choose will make me respect you less. Take all the time you need.</p>
+    <p class="signature reveal" style="animation-delay:.76s">With honesty and respect,
+— Me</p>
+  </section>
+
+  <hr class="divider">
+
+  <section id="qa" aria-label="Questions"></section>
+</main>
+
+<div id="hearts" aria-hidden="true"></div>
+
+<script>
+  // ── Config ────────────────────────────────────────────────
+  // Set your Telegram username (without @) to show a direct
+  // "send to him" link on the result screen.
+  var TELEGRAM_USERNAME = "";
+
+  var DODGES_NEEDED = 5;
+
+  var QUESTIONS = [
+    "Do you accept my apology and my friendship?",
+    "Do you still love me?"
+  ];
+  var HINT = "Answer honestly — anything is okay.";
+  var LABEL_YES = "Yes";
+  var LABEL_NO = "No";
+  var LABEL_IDK = "I don't know";
+
+  var DODGE_LINES = [
+    "Whoa — the No button just jumped. It is a little shy.",
+    "The No button is doing warm-up stretches. It will not sit still.",
+    "That button is faster than it looks. Nice try, though.",
+    "The No button has legs. This is new information for everyone.",
+    "The No button is on a coffee break. It left a note: 'back soon.'",
+    "Catch me if you can! — the No button, probably.",
+    "The No button went for a little walk. It does this sometimes.",
+    "So close! The button got nervous and moved away.",
+    "The No button is exercising today. It is very serious about it.",
+    "It is not running from you. It is just… walking fast.",
+    "The No button is playing hard to get. It learned from the best.",
+    "The No button says 'not yet' and slips away. A little rude, honestly.",
+    "Even the buttons want you to take your time.",
+    "The No button is hiding behind the Yes button. Very mature.",
+    "The No button is doing its best. Its best is escaping.",
+    "Almost! The button panicked and went to hide."
+  ];
+  var IDK_DODGE_LINES = [
+    "The 'I don't know' button went to think about it. It is still thinking.",
+    "It is loading… please give the button a moment.",
+    "The button is having a small identity crisis. It will be fine.",
+    "It went to ask its friends. The friends also do not know.",
+    "The button is making tea. Thinking tea. It will be right back.",
+    "I don't know where it went. See? It learned from you.",
+    "The button is asking the stars. The stars are not very clear.",
+    "It is not lost — it is exploring. Very deep.",
+    "The button is reading the letter again. It needs a minute.",
+    "The button is taking a deep breath. Maybe two.",
+    "That button is as confused as a cat in a new house.",
+    "The button is looking for its glasses. It will be right back.",
+    "The button says it does not know either. Honest answer.",
+    "It slipped out to think. Give it a second.",
+    "The button is doing its best impression of a tumbleweed.",
+    "Not knowing is a real answer. The button is just shy about it."
+  ];
+  var GIVES_UP_LINE = "Okay, okay — the button gives up. It is staying still now. Press whatever feels true for you.";
+
+  var RESULT_BOTH_YES = "Thank you — truly. I will not take this chance for granted, and I will keep working to be better. Thank you for reading, and for saying yes.";
+  var RESULT_MIXED = "Thank you for answering honestly. Mixed feelings are real, and I am grateful you shared yours with me. I am here, and I am listening.";
+  var RESULT_ANY_NO = "I understand, and I respect your answer. Thank you for reading the letter and for being honest with me. I will always be grateful for you.";
+  var RESULT_ANY_IDK = "That is completely okay. You do not have to know right now, and there is no rush at all. Thank you for reading — that already means a lot.";
+
+  var SHARE_LABEL = "Share answers on Telegram";
+  var COPY_LABEL = "Copy answers";
+  var SHARE_TEXT_TEMPLATE = "I read your letter, and here are my honest answers:\n1. {answer1}\n2. {answer2}\n\n{url}";
+
+  var REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ── State ─────────────────────────────────────────────────
+  var answers = [null, null];
+  var step = 0;
+
+  // ── Build question cards ──────────────────────────────────
+  var qa = document.getElementById("qa");
+
+  function makeCard(index) {
+    var card = document.createElement("div");
+    card.className = "question" + (index === 0 ? "" : " hidden");
+    card.id = "q" + index;
+
+    var h2 = document.createElement("h2");
+    h2.textContent = QUESTIONS[index];
+    card.appendChild(h2);
+
+    var hint = document.createElement("p");
+    hint.className = "hint";
+    hint.textContent = HINT;
+    card.appendChild(hint);
+
+    var buttons = document.createElement("div");
+    buttons.className = "buttons";
+
+    var dodgeState = {
+      no:  { dodges: 0, offset: { x: 0, y: 0 } },
+      idk: { dodges: 0, offset: { x: 0, y: 0 } }
+    };
+
+    var line = document.createElement("p");
+    line.className = "dodge-line";
+    line.setAttribute("aria-live", "polite");
+
+    function makeBtn(label, kind) {
+      var btn = document.createElement("button");
+      btn.className = "btn btn-" + kind;
+      btn.textContent = label;
+
+      if (kind !== "yes") {
+        var st = dodgeState[kind];
+        var lines = kind === "no" ? DODGE_LINES : IDK_DODGE_LINES;
+
+        function tryDodge() {
+          if (st.dodges >= DODGES_NEEDED) return false;
+          st.dodges++;
+          var rect = btn.getBoundingClientRect();
+          var xMin = -rect.left + 16;
+          var xMax = window.innerWidth - rect.right - 16;
+          var yMin = -rect.top + 16;
+          var yMax = window.innerHeight - rect.bottom - 16;
+          var dx = (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 80);
+          var dy = (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 80);
+          st.offset.x = Math.min(Math.max(st.offset.x + dx, xMin), xMax);
+          st.offset.y = Math.min(Math.max(st.offset.y + dy, yMin), yMax);
+          btn.style.transform = "translate(" + st.offset.x + "px, " + st.offset.y + "px)";
+          showLine(line, lines[(st.dodges - 1) % lines.length]);
+          if (st.dodges >= DODGES_NEEDED) {
+            btn.classList.add("tamed");
+            showLine(line, GIVES_UP_LINE);
+          }
+          return true;
+        }
+
+        btn.addEventListener("pointerdown", function (e) {
+          if (st.dodges < DODGES_NEEDED) {
+            e.preventDefault();
+            tryDodge();
+          }
+        });
+        btn.addEventListener("click", function () {
+          if (st.dodges < DODGES_NEEDED) {
+            tryDodge(); // keyboard users: Enter also gets a dodge
+          } else {
+            choose(index, label);
+          }
+        });
+      } else {
+        btn.addEventListener("click", function () { choose(index, label); });
+      }
+
+      return btn;
+    }
+
+    buttons.appendChild(makeBtn(LABEL_YES, "yes"));
+    buttons.appendChild(makeBtn(LABEL_NO, "no"));
+    buttons.appendChild(makeBtn(LABEL_IDK, "idk"));
+
+    card.appendChild(buttons);
+    card.appendChild(line);
+    qa.appendChild(card);
+  }
+
+  function showLine(el, text) {
+    el.textContent = text;
+    el.style.animation = "none";
+    void el.offsetWidth; // restart pop animation
+    el.style.animation = "";
+  }
+
+  // ── Answer flow ───────────────────────────────────────────
+  function choose(index, value) {
+    answers[index] = value;
+    if (value === "Yes") burstHearts();
+    var card = document.getElementById("q" + index);
+    card.classList.add("hidden");
+    if (index === 1) {
+      showResult();
+    } else {
+      step = 1;
+      var next = document.getElementById("q1");
+      next.classList.remove("hidden");
+      next.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "center" });
+    }
+  }
+
+  // ── Result ────────────────────────────────────────────────
+  function resultText() {
+    if (answers[0] === "Yes" && answers[1] === "Yes") return RESULT_BOTH_YES;
+    if (answers[0] === "No" || answers[1] === "No") return RESULT_ANY_NO;
+    if (answers[0] === "I don't know" || answers[1] === "I don't know") return RESULT_ANY_IDK;
+    return RESULT_MIXED;
+  }
+
+  function shareText() {
+    return SHARE_TEXT_TEMPLATE
+      .replace("{answer1}", answers[0])
+      .replace("{answer2}", answers[1])
+      .replace("{url}", window.location.href);
+  }
+
+  function showResult() {
+    var card = document.createElement("div");
+    card.className = "question";
+    card.id = "result";
+
+    var title = document.createElement("h2");
+    title.className = "result-title";
+    title.textContent = "Thank you for answering.";
+    card.appendChild(title);
+
+    var text = document.createElement("p");
+    text.className = "result-text";
+    text.textContent = resultText();
+    card.appendChild(text);
+
+    var recap = document.createElement("div");
+    recap.className = "recap";
+    for (var i = 0; i < 2; i++) {
+      var p = document.createElement("p");
+      var q = document.createElement("span");
+      q.className = "q";
+      q.textContent = (i + 1) + ". " + QUESTIONS[i] + " ";
+      p.appendChild(q);
+      p.appendChild(document.createTextNode("→ " + answers[i]));
+      recap.appendChild(p);
+    }
+    card.appendChild(recap);
+
+    var actions = document.createElement("div");
+    actions.className = "result-actions";
+
+    var tg = document.createElement("a");
+    tg.className = "btn btn-yes";
+    tg.href = "https://t.me/share/url?url=" + encodeURIComponent(window.location.href) +
+              "&text=" + encodeURIComponent(shareText());
+    tg.target = "_blank";
+    tg.rel = "noopener";
+    tg.textContent = SHARE_LABEL;
+    actions.appendChild(tg);
+
+    var copy = document.createElement("button");
+    copy.className = "btn btn-ghost";
+    copy.textContent = COPY_LABEL;
+    copy.addEventListener("click", function () {
+      var t = shareText();
+      var done = function () {
+        copy.textContent = "Copied ✓";
+        setTimeout(function () { copy.textContent = COPY_LABEL; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(done, function () { fallbackCopy(t); done(); });
+      } else {
+        fallbackCopy(t);
+        done();
+      }
+    });
+    actions.appendChild(copy);
+    card.appendChild(actions);
+
+    if (TELEGRAM_USERNAME) {
+      var direct = document.createElement("a");
+      direct.className = "tg-link";
+      direct.href = "https://t.me/" + TELEGRAM_USERNAME;
+      direct.target = "_blank";
+      direct.rel = "noopener";
+      direct.textContent = "…or send it to him directly";
+      card.appendChild(direct);
+    }
+
+    qa.appendChild(card);
+    card.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "center" });
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  // ── Floating hearts on Yes ────────────────────────────────
+  function burstHearts() {
+    if (REDUCED_MOTION) return;
+    var holder = document.getElementById("hearts");
+    var count = 12;
+    for (var i = 0; i < count; i++) {
+      var h = document.createElement("span");
+      h.className = "floating-heart";
+      h.textContent = "♥";
+      h.style.left = (5 + Math.random() * 90) + "vw";
+      h.style.fontSize = (18 + Math.random() * 10) + "px";
+      h.style.opacity = 0.7 + Math.random() * 0.2;
+      h.style.animationDuration = (2.5 + Math.random() * 1.5) + "s";
+      h.style.animationDelay = (Math.random() * 0.4) + "s";
+      h.addEventListener("animationend", function () { h.remove(); });
+      holder.appendChild(h);
+    }
+  }
+
+  makeCard(0);
+  makeCard(1);
+</script>
+</body>
+</html>
